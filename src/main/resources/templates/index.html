@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        button {
+            border: none;
+            padding: 12px;
+            margin-top: 30px;
+            width: 85%;
+            margin-left: 8%;
+            border-radius: 15px;
+            background-color: blue;
+            color: white;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        label {
+            text-align: center;
+        }
+
+        input {
+            padding: 7px;
+            border-color: blue;
+            border-radius: 15px;
+            width: 80%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body style="display: flex; justify-content: center; font-family: sans-serif;">
+<script>
+    function checkUser() {
+        const url = "/user/login?username=" + document.authForm.username.value + "&password=" + document.authForm.password.value;
+        fetch(url, {
+            method: "GET"
+        }).then(res => {
+            if (res.status === 200) {
+                window.location = "/home?username=" + document.authForm.username.value;
+            } else if (res.status === 400) {
+                alert("User not registered");
+            }
+        }).catch(err => {
+            alert(err);
+        })
+        return true;
+    }
+</script>
+<div style="padding: 20px; width: 30%">
+    <h1 style="text-align: center">Login</h1>
+    <form name="authForm" onsubmit="event.preventDefault(); checkUser();">
+        <label>
+            username <br>
+            <input name="username" required type="text"/>
+        </label>
+        <label style="margin-top: 20px">
+            password <br>
+            <input name="password" required type="text"/>
+        </label>
+        <button type="submit">Login</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+</head>
+<body style="font-family: sans-serif">
+<h1>Dashboard</h1>
+<h3>Username: <span th:text="${user.getUsername()}"/></h3>
+<h3>Current money: <span th:text="${user.getMoney()}"/></h3>
+</body>
+</html>

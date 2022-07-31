@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Fund projects!</title>
+    <style>
+        .project {
+            border: solid 2px blue;
+            border-radius: 15px;
+            margin-top: 20px;
+            padding: 20px;
+            margin-right: 20px;
+            margin-bottom: 20px;
+            width: 25%;
+        }
+
+        button {
+            border: none;
+            padding: 10px;
+            background-color: blue;
+            color: white;
+            border-radius: 15px;
+            width: 100%;
+        }
+
+        .all-projects {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body style="font-family: sans-serif;">
+<script>
+    function donate(projectId) {
+        const orgUrl = window.location;
+        const params = new URLSearchParams(location.search);
+
+        const url = "/donate/project?username=" + params.get("username") + "&projectId=" + projectId;
+        fetch(url, {
+            method: "GET"
+        }).then(res => {
+            res.text().then(res => {
+                alert(res);
+                window.location.reload();
+            })
+
+            // alert("Successfully donated");
+        }).catch(err => {
+            alert("Error donated");
+        })
+    }
+</script>
+<h1 style="text-align: center">Fund projects!</h1>
+<div class="all-projects">
+    <div class="project" th:each="project : ${projects}">
+        <h3 th:text="${project.getTitle()}"/>
+        <h5>Funds required: <span th:text="${project.getFundsRequired()}"/></h5>
+        <h5>Funds given: <span th:text="${project.getFundsGiven()}"/></h5>
+        <button th:onclick="|donate(${project.getId()})|">Donate 100</button>
+    </div>
+</div>
+</body>
+</html>
