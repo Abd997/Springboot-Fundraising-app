@@ -14,22 +14,37 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @AllArgsConstructor
-public class FundRaisers {
+public class FundSeeker {
     
     @Id
     @Column
     private int id;
     
-    @Column(unique = true)
+    @Column
     private String username;
+    
+    @Column(unique = true)
+    private String email;
     
     @Column
     private String password;
     
     @Column
-    private int money;
+    private String location;
     
-    public FundRaisers() {
+    @Column
+    private String purpose;
+    
+    @Column
+    private int targetAmount;
+    
+    @Column
+    private String targetDate;
+    
+    @Column(unique = true)
+    private int bankCard;
+    
+    public FundSeeker() {
     
     }
 }

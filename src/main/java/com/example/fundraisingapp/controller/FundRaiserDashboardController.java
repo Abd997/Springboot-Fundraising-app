@@ -1,6 +1,6 @@
 package com.example.fundraisingapp.controller;
 
-import com.example.fundraisingapp.service.FundRaisersService;
+import com.example.fundraisingapp.service.FundContributorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FundRaiserDashboardController {
     
     @Autowired
-    private FundRaisersService fundRaisersService;
+    private FundContributorService fundContributorService;
     
     @GetMapping("/fundraiser/dashboard")
     public String getDashboard(Model model, @RequestParam String username) {
-        model.addAttribute("user", fundRaisersService.getUser(username));
+        model.addAttribute("user", fundContributorService.getUser(username));
         return "fundRaiserDashboard";
 //        return fundRaisersService.getUser("user").getUsername();
     }

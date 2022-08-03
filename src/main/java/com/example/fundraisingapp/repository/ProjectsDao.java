@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 
-public interface ProjectsRepo extends JpaRepository<Projects, Integer> {
+public interface ProjectsDao extends JpaRepository<Projects, Integer> {
     
     @Modifying
     @Transactional

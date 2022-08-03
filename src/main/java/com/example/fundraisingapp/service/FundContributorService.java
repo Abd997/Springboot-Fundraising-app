@@ -1,7 +1,7 @@
 package com.example.fundraisingapp.service;
 
-import com.example.fundraisingapp.model.FundRaisers;
-import com.example.fundraisingapp.repository.FundRaisersRepo;
+import com.example.fundraisingapp.model.FundContributor;
+import com.example.fundraisingapp.repository.FundContributorDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,24 +9,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class FundRaisersService {
+public class FundContributorService {
     
     @Autowired
-    private FundRaisersRepo fundRaisersRepo;
+    private FundContributorDao fundContributorDao;
     
-    public List<FundRaisers> getAllFundRaisers() {
-        List<FundRaisers> raisers = new ArrayList<FundRaisers>();
-        fundRaisersRepo.findAll().forEach(raiser -> raisers.add(raiser));
+    public List<FundContributor> getAllFundRaisers() {
+        List<FundContributor> raisers = new ArrayList<FundContributor>();
+        fundContributorDao.findAll().forEach(raiser -> raisers.add(raiser));
         return raisers;
     }
     
-    public FundRaisers getUser(String username) {
-        return fundRaisersRepo.findByUsername(username);
+    public FundContributor getUser(String username) {
+        return fundContributorDao.findByUsername(username);
     }
     
     public boolean authenticate(String username, String password) {
         boolean userExists = false;
-        for (FundRaisers raisers : fundRaisersRepo.findAll()) {
+        for (FundContributor raisers : fundContributorDao.findAll()) {
             if (raisers.getUsername().equals(username)
                     && raisers.getPassword().equals(password)) {
                 userExists = true;
@@ -37,13 +37,13 @@ public class FundRaisersService {
     }
     
     public void updateFunds(int money, String username) {
-        int oldMoney = fundRaisersRepo.findUserMoney(username);
+        int oldMoney = fundContributorDao.findUserMoney(username);
         int newMoney = oldMoney + money;
-        fundRaisersRepo.updateUserMoney(username, newMoney);
+        fundContributorDao.updateUserMoney(username, newMoney);
     }
     
     public boolean checkIfFundsAvailable(String username) {
-        int oldMoney = fundRaisersRepo.findUserMoney(username);
+        int oldMoney = fundContributorDao.findUserMoney(username);
         return oldMoney != 0;
     }
 }

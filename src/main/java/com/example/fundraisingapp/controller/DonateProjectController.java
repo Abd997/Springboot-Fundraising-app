@@ -1,6 +1,6 @@
 package com.example.fundraisingapp.controller;
 
-import com.example.fundraisingapp.service.FundRaisersService;
+import com.example.fundraisingapp.service.FundContributorService;
 import com.example.fundraisingapp.service.ProjectsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,16 +14,16 @@ public class DonateProjectController {
     private ProjectsService projectsService;
     
     @Autowired
-    private FundRaisersService fundRaisersService;
+    private FundContributorService fundContributorService;
     
     @GetMapping("/donate/project")
     public String donate(@RequestParam int projectId, @RequestParam String username) {
-        boolean fundsAvailable = fundRaisersService.checkIfFundsAvailable(username);
+        boolean fundsAvailable = fundContributorService.checkIfFundsAvailable(username);
         if (!fundsAvailable) {
             return "User does not have funds";
         }
         projectsService.addFunds(100, projectId);
-        fundRaisersService.updateFunds(-100, username);
+        fundContributorService.updateFunds(-100, username);
         return "Funds transferred";
     }
 }

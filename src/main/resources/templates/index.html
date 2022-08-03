@@ -9,7 +9,6 @@
             padding: 12px;
             margin-top: 30px;
             width: 85%;
-            margin-left: 8%;
             border-radius: 15px;
             background-color: blue;
             color: white;
@@ -21,28 +20,41 @@
             margin-top: 20px;
         }
 
-        label {
-            text-align: center;
-        }
-
-        input {
+        .user-input {
             padding: 7px;
             border-color: blue;
             border-radius: 15px;
             width: 80%;
             margin-top: 10px;
         }
+
+        .user-type-container {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            width: 85%;
+        }
     </style>
 </head>
 <body style="display: flex; justify-content: center; font-family: sans-serif;">
 <script>
+
     function checkUser() {
-        const url = "/user/login?username=" + document.authForm.username.value + "&password=" + document.authForm.password.value;
+        const username = document.authForm.username.value;
+        const password = document.authForm.password.value;
+        const userType = document.authForm.userType.value;
+        const url = `/user/login?username=${username}&password=${password}&userType=${userType}`;
         fetch(url, {
             method: "GET"
         }).then(res => {
             if (res.status === 200) {
-                window.location = "/home?username=" + document.authForm.username.value;
+                if (userType === "fund seeker") {
+                    window.location = "/fund-seeker/home?username=" + username;
+                } else if (userType === "fund contributor") {
+                    window.location = "/fund-contributor/home?username=" + username;
+                } else if (userType === "platform owner") {
+                    window.location = "/platform-owner/home?username=" + username;
+                }
             } else if (res.status === 400) {
                 alert("User not registered");
             }
@@ -53,16 +65,28 @@
     }
 </script>
 <div style="padding: 20px; width: 30%">
-    <h1 style="text-align: center">Login</h1>
+    <h1>Login</h1>
     <form name="authForm" onsubmit="event.preventDefault(); checkUser();">
         <label>
             username <br>
-            <input name="username" required type="text"/>
+            <input class="user-input" name="username" required type="text"/>
         </label>
         <label style="margin-top: 20px">
             password <br>
-            <input name="password" required type="text"/>
+            <input class="user-input" name="password" required type="text"/>
         </label>
+        <div class="user-type-container">
+            <label for="Fund seeker">Fund seeker</label>
+            <input id="Fund seeker" name="userType" type="radio" value="fund seeker">
+        </div>
+        <div class="user-type-container">
+            <label for="Fund contributor">Fund contributor</label>
+            <input id="Fund contributor" name="userType" type="radio" value="fund contributor">
+        </div>
+        <div class="user-type-container">
+            <label for="Platform owner">Platform owner</label>
+            <input id="Platform owner" name="userType" type="radio" value="platform owner">
+        </div>
         <button type="submit">Login</button>
     </form>
 </div>

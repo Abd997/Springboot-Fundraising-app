@@ -1,7 +1,7 @@
 package com.example.fundraisingapp.service;
 
 import com.example.fundraisingapp.model.Projects;
-import com.example.fundraisingapp.repository.ProjectsRepo;
+import com.example.fundraisingapp.repository.ProjectsDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +12,16 @@ import java.util.List;
 public class ProjectsService {
     
     @Autowired
-    private ProjectsRepo projectsRepo;
+    private ProjectsDao projectsDao;
     
     public List<Projects> getAllProjects() {
         ArrayList<Projects> projects = new ArrayList<>();
-        projectsRepo.findAll().forEach(project -> projects.add(project));
+        projectsDao.findAll().forEach(project -> projects.add(project));
         return projects;
     }
     
     public void addFunds(int funds, int id) {
-        int oldFunds = projectsRepo.getFundsGiven(id);
-        projectsRepo.updateFunds(oldFunds + funds, id);
+        int oldFunds = projectsDao.getFundsGiven(id);
+        projectsDao.updateFunds(oldFunds + funds, id);
     }
 }
